@@ -1,0 +1,12 @@
+numpy
+matplotlib
+scipy
+dtaidistance
+tensorflow==1.15.5
+scikit-learn
+torch
+statsmodels
+tslearn
+seaborn
+mgzip
+protobuf==3.20.0
