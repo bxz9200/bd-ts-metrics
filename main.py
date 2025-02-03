@@ -92,6 +92,9 @@ def main():
             config['evaluation']['model'] = model_name
         results = evaluate_data(config['evaluation'],data,generated_data)
 
+    if not os.path.isdir(os.path.join(os.getcwd(), 'result')):
+        os.mkdir(os.path.join(os.getcwd(), 'result'))
+
     with open('./result/result.json', 'w') as f:
         json.dump(results, f)
         
