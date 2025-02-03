@@ -24,6 +24,7 @@ pip install -r requirements.txt
 
 ## Evaluation
 Data must be in ".csv". Rows are time steps and columns are features/channels/series (whatever you call it). --sql stands for the sequence length of one single time-series data.
+All results will be stored in the result folder.
 ```
 python main.py --rdp /PATH/real_data.csv --sdp /PATH/synthetic_data.csv --sql Seqence_Length
 ```
