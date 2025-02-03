@@ -35,4 +35,4 @@ Refer to this [paper](https://arxiv.org/pdf/2309.03755) for knowledge and educat
 Refer to [TSGBench](https://github.com/YihaoAng/TSGBench.git) for deatiled config settings and instructions.
 
 ## Acknowledgement
-This repo is developed based on [TSGBench](https://github.com/YihaoAng/TSGBench.git)
+This repo is developed based on [TSGBench](https://github.com/YihaoAng/TSGBench.git).
