@@ -3,9 +3,9 @@ import yaml
 import os
 import sys
 import json
-from src.preprocess import load_my_own_data_csv, load_my_own_data_numpy, load_my_own_data_csv_v2
-from src.evaluation import evaluate_data
-from src.utils import write_json_data
+from .src.preprocess import load_my_own_data_csv, load_my_own_data_numpy, load_my_own_data_csv_v2
+from .src.evaluation import evaluate_data
+from .src.utils import write_json_data
 
 class tsMetrics:
     """Implements time series metrics in python
