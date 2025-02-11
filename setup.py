@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="arfpy",
+    name="bdtsmetrics",
     version="0.1.0",
     author="Bingyin Zhao",
     author_email="bingyin@betterdata.ai",
