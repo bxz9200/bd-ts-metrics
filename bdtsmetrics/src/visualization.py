@@ -20,6 +20,10 @@ def visualize_tsne(ori_data, gen_data, result_path, save_file_name):
     colors = ["C0" for i in range(sample_num)] + ["C1" for i in range(sample_num)]    
     
     prep_data_final = np.concatenate((prep_data, prep_data_hat), axis = 0)
+
+    if prep_data_final.shape[1] < 2:
+        dummy_arr = np.zeros((prep_data_final.shape[0], 1))
+        prep_data_final = np.concatenate((prep_data_final, dummy_arr), axis=1)
     
     tsne = TSNE(n_components = 2, verbose = 0, perplexity = 30, n_iter = 1000, random_state = 42) # 40, 300
     tsne_results = tsne.fit_transform(prep_data_final)
