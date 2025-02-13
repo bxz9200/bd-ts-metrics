@@ -26,7 +26,8 @@ seq_len = num_of_sequence_length
 my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data, seq_len=seq_len)
 my_metrics.evaluate()
 ```
-Report.html will be generated in your local folder and detailed results will be stored in folder ./result. 
+**Report.html** will be generated in your local folder and detailed results will be stored in folder **./result**. 
+
 **Refer to config/config.yaml for information of the config file.**
 
 ### Clone this repo:
