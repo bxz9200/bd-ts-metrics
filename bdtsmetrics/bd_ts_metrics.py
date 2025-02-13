@@ -3,6 +3,8 @@ import yaml
 import os
 import sys
 import json
+from jinja2 import Environment, FileSystemLoader
+import base64
 from .src.preprocess import load_my_own_data_csv, load_my_own_data_numpy, load_my_own_data_csv_v2
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
@@ -60,6 +62,52 @@ class tsMetrics:
             json.dump(results, f)
 
         print('Program normal end.')
+
+        # Code below generates the report (.html file) based on the results stored in the result folder
+        # Define the root folder (where main.py and template.html are located)
+        root_folder = os.path.abspath(".")
+
+        # Define the result folder (subfolder where result.json and PNG images reside)
+        result_folder = os.path.join(root_folder, "result")
+
+        # Load the JSON file from the result folder (assumed to be named "result.json")
+        json_path = os.path.join(result_folder, "result.json")
+        with open(json_path, "r", encoding="utf-8") as f:
+            data_metrics = json.load(f)
+
+        # List all PNG files in the result folder and encode them as Base64 strings
+        png_files = sorted([f for f in os.listdir(result_folder) if f.lower().endswith('.png')])
+        images = []
+        for f in png_files:
+            file_path = os.path.join(result_folder, f)
+            with open(file_path, "rb") as img_file:
+                # Read the binary data and encode it as Base64
+                encoded_string = base64.b64encode(img_file.read()).decode("utf-8")
+                # Create a data URL for embedding the image directly in the HTML
+                data_url = f"data:image/png;base64,{encoded_string}"
+                images.append({
+                    "src": data_url,
+                    "caption": f  # Using the file name as the caption; modify if needed.
+                })
+
+        # Set up the Jinja2 environment to load templates from the root folder
+        env = Environment(loader=FileSystemLoader(root_folder))
+        template = env.get_template("template.html")
+
+        # Render the template with data from JSON, the list of images, and the entire JSON as json_data.
+        rendered_html = template.render(
+            title=data_metrics.get("title", "Betterdata TimeSeries Report"),
+            heading=data_metrics.get("heading", "Welcome"),
+            images=images,
+            json_data=data_metrics
+        )
+
+        # Write the rendered HTML to an output file in the root folder
+        output_path = os.path.join(root_folder, "Report.html")
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(rendered_html)
+
+        print(f"HTML file generated: {output_path}")
 
 
 
