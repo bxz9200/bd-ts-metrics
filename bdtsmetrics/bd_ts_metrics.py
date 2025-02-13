@@ -90,25 +90,45 @@ class tsMetrics:
                     "caption": f  # Using the file name as the caption; modify if needed.
                 })
 
-        # Set up the Jinja2 environment to load templates from the root folder
-        template_folder_path = '.templates'
-        env = Environment(loader=FileSystemLoader(template_folder_path))
-        template = env.get_template("template.html")
+        repo_url = "https://github.com/bxz9200/bd-ts-metrics.git"  # Replace with your repo URL
+        local_repo_path = "temp_templates"  # A temporary directory to clone into
 
-        # Render the template with data from JSON, the list of images, and the entire JSON as json_data.
-        rendered_html = template.render(
-            title=data_metrics.get("title", "Betterdata TimeSeries Report"),
-            heading=data_metrics.get("heading", "Welcome"),
-            images=images,
-            json_data=data_metrics
-        )
+        try:
+            # 1. Clone the repository (if it doesn't exist locally):
+            if not os.path.exists(local_repo_path):
+                Repo.clone_from(repo_url, local_repo_path)
+            else:
+                repo = Repo(local_repo_path)
+                repo.remotes.origin.pull()  # Update the repo if it exists
 
-        # Write the rendered HTML to an output file in the root folder
-        output_path = os.path.join(root_folder, "Report.html")
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(rendered_html)
+            # 2. Set up the Jinja2 environment:
+            env = Environment(loader=FileSystemLoader(local_repo_path))
 
-        print(f"HTML file generated: {output_path}")
+            # 3. Load the template (relative to the cloned directory):
+            template = env.get_template("template.html")  # Path relative to repo root
+
+            # 4. Render the template with data from JSON, the list of images, and the entire JSON as json_data.
+            rendered_html = template.render(
+                title=data_metrics.get("title", "Betterdata TimeSeries Report"),
+                heading=data_metrics.get("heading", "Welcome"),
+                images=images,
+                json_data=data_metrics
+            )
+
+            # Write the rendered HTML to an output file in the root folder
+            output_path = os.path.join(root_folder, "Report.html")
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(rendered_html)
+
+            print(f"HTML file generated: {output_path}")
+
+
+        finally:
+            pass
+        # 5. (Optional) Remove the temporary directory after you're done:
+        # shutil.rmtree(local_repo_path)  # Be careful with this, only if you're sure you want to delete it.
+
+
 
 
 
