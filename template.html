@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .json-data { margin-bottom: 30px; }
+        .json-data li { margin: 5px 0; }
+        figure { margin: 20px 0; }
+        figcaption { text-align: center; font-style: italic; color: #555; }
+        img { max-width: 300px; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <h1>{{ heading }}</h1>
+
+    <!-- Section to display JSON data as key:value pairs -->
+    <div class="json-data">
+        <h2>JSON Data</h2>
+        <ul>
+            {% for key, value in json_data.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Section to display images with captions -->
+    <div class="images">
+        <h2>Images</h2>
+        {% for image in images %}
+            <figure>
+                <img src="{{ image.src }}" alt="Image">
+                <figcaption>{{ image.caption }}</figcaption>
+            </figure>
+        {% endfor %}
+    </div>
+</body>
+</html>
