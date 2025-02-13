@@ -3,6 +3,7 @@ import yaml
 import os
 import sys
 import json
+import shutil
 from jinja2 import Environment, FileSystemLoader
 import base64
 from git import Repo
@@ -125,9 +126,8 @@ class tsMetrics:
 
 
         finally:
-            pass
         # 5. (Optional) Remove the temporary directory after you're done:
-        # shutil.rmtree(local_repo_path)  # Be careful with this, only if you're sure you want to delete it.
+            shutil.rmtree(local_repo_path)  # Be careful with this, only if you're sure you want to delete it.
 
 
 
