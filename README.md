@@ -7,6 +7,7 @@
 
 
 ## Install
+### Pip installation:
 You can pip install the repo using:
 ```bash
 pip install "git+https://github.com/bxz9200/bd-ts-metrics"
@@ -23,7 +24,7 @@ my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_dat
 ```
 Report.html will be generated in your local folder and detailed results will be stored in folder ./result. Refer to config/config.yaml for information of the config file.
 
-
+### Clone this repo:
 Or install by cloning this repo:
 1. Clone this repository and navigate to time-series-synthetic folder
 ```bash
