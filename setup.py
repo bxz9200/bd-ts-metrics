@@ -12,7 +12,7 @@ setuptools.setup(
     url='https://github.com/bxz9200/bd-ts-metrics',
     license='MIT',
     install_requires=['numpy>=1.19', 'matplotlib>=3.9', 'scipy>=1.13', 'dtaidistance==2.3.12', 'tensorflow>=2.15', 'scikit-learn>=1.5',
-                      'torch>=2.3', 'statsmodels>=0.13', 'tslearn==0.6.3', 'seaborn>=0.12.2', 'mgzip==0.2.1', 'protobuf==3.20.0','Jinja2==3.1.5'],
+                      'torch>=2.3', 'statsmodels>=0.13', 'tslearn==0.6.3', 'seaborn>=0.12.2', 'mgzip==0.2.1', 'protobuf==4.25.5','Jinja2==3.1.5'],
 
     classifiers=["Programming Language :: Python :: 3.7",
                  "Programming Language :: Python :: 3.8",
