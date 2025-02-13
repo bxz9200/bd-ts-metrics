@@ -13,7 +13,7 @@ You can pip install the repo using:
 pip install "git+https://github.com/bxz9200/bd-ts-metrics"
 ```
 After installation, follow the code below for evaluation:
-```
+```python
 from bdtsmetrics import bd_ts_metrics
 
 config = "PATH/config.yaml"
