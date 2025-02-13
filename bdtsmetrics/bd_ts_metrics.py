@@ -5,6 +5,7 @@ import sys
 import json
 from jinja2 import Environment, FileSystemLoader
 import base64
+from git import Repo
 from .src.preprocess import load_my_own_data_csv, load_my_own_data_numpy, load_my_own_data_csv_v2
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
