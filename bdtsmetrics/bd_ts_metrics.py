@@ -50,14 +50,8 @@ class tsMetrics:
         else:
             raise Exception("Synthetic data: wrong data format")
 
-        if config['evaluation'].get('do_evaluation', True):
-            dataset_name = config['preprocessing'].get('dataset_name', 'dataset')
-            model_name = config['generation'].get('model', 'Betterdata-TS-Model')
-            if 'dataset_name' not in config['evaluation']:
-                config['evaluation']['evaluation'] = dataset_name
-            if 'model' not in config['evaluation']:
-                config['evaluation']['model'] = model_name
-            results = evaluate_data(config['evaluation'], data, generated_data)
+
+        results = evaluate_data(config['evaluation'], data, generated_data)
 
         if not os.path.isdir(os.path.join(os.getcwd(), 'result')):
             os.mkdir(os.path.join(os.getcwd(), 'result'))

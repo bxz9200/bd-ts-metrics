@@ -57,10 +57,10 @@ def evaluate_data(cfg, ori_data, gen_data):
     show_with_start_divider(f"Evalution with settings:{cfg}")
 
     # Parse configs
-    method_list = cfg.get('method_list','[C-FID,MDD,ACD,SD,KD,ED,DTW,t-SNE,Distribution]')
+    method_list = cfg.get('method_list','[C-FID,t-SNE,Distribution]')
     #result_path = cfg.get('result_path',r'./result/')
-    dataset_name = cfg.get('dataset_name','dataset')
-    model_name = cfg.get('model','TimeVAE')
+    dataset_name = cfg.get('dataset_name','customized')
+    model_name = cfg.get('model','BD-TS')
     no_cuda = cfg.get('no_cuda',False)
     cuda_device = cfg.get('cuda_device',0)
     device = determine_device(no_cuda,cuda_device)
