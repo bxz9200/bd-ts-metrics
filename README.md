@@ -3,7 +3,7 @@
 
 ## Contents
 - [Install](#install)
-- [Evaluation](#evaluation)
+- [Usage](#usage)
 
 
 ## Install
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ```
 
 
-## Evaluation
+## Usage
 Data must be in ".csv". Rows are time steps and columns are features/channels/series (whatever you call it). --sql stands for the sequence length of one single time-series data.
 All results will be stored in the result folder.
 ```
