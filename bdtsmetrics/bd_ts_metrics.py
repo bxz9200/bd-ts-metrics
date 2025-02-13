@@ -91,7 +91,7 @@ class tsMetrics:
                 })
 
         # Set up the Jinja2 environment to load templates from the root folder
-        template_folder_path = './templates'
+        template_folder_path = '.templates'
         env = Environment(loader=FileSystemLoader(template_folder_path))
         template = env.get_template("template.html")
 
