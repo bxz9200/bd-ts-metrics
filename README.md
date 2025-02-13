@@ -5,8 +5,26 @@
 - [Install](#install)
 - [Evaluation](#evaluation)
 
-## Install
 
+## Install
+You can pip install the repo using:
+```bash
+pip install "git+https://github.com/bxz9200/bd-ts-metrics"
+```
+After installation, follow the code below for evaluation:
+```
+from bdtsmetrics import bd_ts_metrics
+
+config = "PATH/config.yaml"
+real_data = "PATH/real_data.csv"
+syn_data = "PATH/synthetic_data.csv"
+seq_len = num_of_sequence_length
+my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data, seq_len=seq_len)
+```
+Report.html will be generated in your local folder and detailed results will be stored in folder ./result. Refer to config/config.yaml for information of the config file.
+
+
+Or install by cloning this repo:
 1. Clone this repository and navigate to time-series-synthetic folder
 ```bash
 git clone https://github.com/betterdataai/ts-metrics.git
@@ -26,7 +44,7 @@ pip install -r requirements.txt
 Data must be in ".csv". Rows are time steps and columns are features/channels/series (whatever you call it). --sql stands for the sequence length of one single time-series data.
 All results will be stored in the result folder.
 ```
-python main.py --rdp /PATH/real_data.csv --sdp /PATH/synthetic_data.csv --sql Seqence_Length
+python main.py --config /PATH/config.ymal --rdp /PATH/real_data.csv --sdp /PATH/synthetic_data.csv --sql Seqence_Length
 ```
 
 Metrics details are listed [here](https://www.notion.so/betterdataai/TS-V1-10de183a10414c668cd46db59ce95495?pvs=4#bcc5d6544efe46f18d3d12722994669f).
