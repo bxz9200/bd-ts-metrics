@@ -20,15 +20,14 @@ from bdtsmetrics import bd_ts_metrics
 config = "PATH/config.yaml"
 real_data = "PATH/real_data.csv"
 syn_data = "PATH/synthetic_data.csv"
-seq_len = num_of_sequence_length
 
 # Run evaluation
-my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data, seq_len=seq_len)
+my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data)
 my_metrics.evaluate()
 ```
 **Report.html** will be generated in your local folder and detailed results will be stored in folder **./result**. 
 
-Refer to **config/config.yaml** for information of the config file.
+Refer to **config/config.yaml** for information of the config file. To run the evaluation correctly, make sure you correctly define the **seq_len** and **non_ts_cols** in the config file.
 
 ### Clone this repo:
 Or install by cloning this repo:
