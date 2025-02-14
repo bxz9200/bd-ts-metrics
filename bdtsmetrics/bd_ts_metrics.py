@@ -26,11 +26,10 @@ class tsMetrics:
       :type seq_len: int
     """
 
-    def __init__(self, config, real_data, syn_data, seq_len):
+    def __init__(self, config, real_data, syn_data):
       self.config = config
       self.real_data = real_data
       self.syn_data = syn_data
-      self.seq_len = seq_len
 
 
     def load_config_from_file(self,config_file):
