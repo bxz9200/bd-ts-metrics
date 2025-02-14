@@ -17,7 +17,7 @@ After installation, follow the code below for evaluation:
 from bdtsmetrics import bd_ts_metrics
 
 # Define the path of config and data files
-config = "PATH/config.yaml"
+config = "PATH/config.yaml" # both yaml and json files are supported
 real_data = "PATH/real_data.csv"
 syn_data = "PATH/synthetic_data.csv"
 
