@@ -4,6 +4,7 @@
 ## Contents
 - [Install](#install)
 - [Usage](#usage)
+- [Metrics](#metrics)
 
 
 ## Install
@@ -59,6 +60,7 @@ All results will be stored in the result folder.
 python evaluate.py --config /PATH/config.ymal --rdp /PATH/real_data.csv --sdp /PATH/synthetic_data.csv --sql Seqence_Length
 ```
 
+## Metrics
 Metrics details are listed [here](https://www.notion.so/betterdataai/TS-V1-10de183a10414c668cd46db59ce95495?pvs=4#bcc5d6544efe46f18d3d12722994669f).
 
 Refer to this [paper](https://arxiv.org/pdf/2309.03755) for knowledge and education.
