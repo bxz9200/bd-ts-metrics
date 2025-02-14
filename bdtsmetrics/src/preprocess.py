@@ -8,6 +8,7 @@ from tslearn.datasets import UCR_UEA_datasets
 import pickle
 import mgzip
 from .utils import show_with_start_divider, show_with_end_divider, make_sure_path_exist, MinMaxScaler
+import json
 
 
 # adapt from https://github.com/TheDatumOrg/VUS
@@ -98,7 +99,9 @@ def preprocess_data(cfg):
     if np.isnan(ori_data).any():
         if not isinstance(ori_data, pd.DataFrame):
             df = pd.DataFrame(ori_data)
-        df = df.interpolate(axis=1)
+            df = df.interpolate(axis=1)
+        else:
+            df = ori_data.interpolate(axis=1)
         ori_data = df.to_numpy()
 
     # Determine the data length
@@ -224,7 +227,42 @@ def load_my_own_data_csv_v2(path, seq_len):
     norm_data = normalize(data)
     return norm_data
     
-    
+
+def load_from_df(df, seq_len):
+    data = df.to_numpy()
+    if len(data.shape) != 2:
+        data = data.reshape((df_real.shape[0], 1))
+
+    data = bd_sliding_window_view(data, seq_len)
+    norm_data = normalize(data)
+    return norm_data
+
+def extract_ts_from_csv(path, seq_len, non_ts_cols):
+    df = pd.read_csv(path)
+
+    # get ts column names
+    ts_col_names = [c for c in df.columns if
+                    "Unnamed" not in c and c not in non_ts_cols]
+    extracted_ts_col_names = []
+    for i in range(len(ts_col_names)):
+        if i % seq_len == 0:
+            extracted_ts_col_names.append(ts_col_names[i])
+
+    # extract ts data and convert to the shape required by next step
+    ts = df[[c for c in df.columns if c not in other_static_columns and c != static_id and c != sortby]]
+    ts = ts.to_numpy()
+    # print(extracted_ts_col_names)
+    print("temporal data shape: {}, seq_len is: {}".format(ts.shape, seq_len))
+    if ts.shape[1] % seq_len != 0:
+        raise Exception("length of time series data must be divisble by seq_len")
+    ts = np.reshape(ts, (ts.shape[0], seq_len, ts.shape[1] // seq_len))
+    dim = ts.shape[0] * ts.shape[1]
+    dim2 = ts.shape[2]
+    ts = np.reshape(ts, (dim, dim2))
+    # convert ts data back to df
+    ts_df = pd.DataFrame(ts, columns=extracted_ts_col_names)
+
+    return ts_df
     
 
             

@@ -7,7 +7,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 import base64
 from git import Repo
-from .src.preprocess import load_my_own_data_csv, load_my_own_data_numpy, load_my_own_data_csv_v2
+from src.preprocess import extract_ts_from_csv, load_from_df
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
 
@@ -39,20 +39,28 @@ class tsMetrics:
 
 
     def evaluate(self):
-        config = self.load_config_from_file(self.config)
-        if self.real_data.endswith(".csv"):
-            data = load_my_own_data_csv(self.real_data, self.seq_len)
-        elif self.real_data.endswith(".npy"):
-            data = load_my_own_data_numpy(self.real_data)
-        else:
-            raise Exception("Real data: wrong data format")
+        if self.config.endswith('json'):
+            with open(self.config, "r") as f:
+                metric_config = json.load(f)
+                f.close()
+        elif self.config.endswith('yaml'):
+            metric_config = self.load_config_from_file(self.config)
 
-        if self.syn_data.endswith(".csv"):
-            generated_data = load_my_own_data_csv(self.syn_data, self.seq_len)
-        elif self.syn_data.endswith(".npy"):
-            generated_data = load_my_own_data_numpy(self.syn_data)
+        if "evaluation" in metric_config:
+            config = metric_config
         else:
-            raise Exception("Synthetic data: wrong data format")
+            config = {}
+            for d in (model_config['data'], model_config['train'], model_config['model'],
+                      model_config['generate']): config.update(d)
+
+        seq_len = config['evaluation']['seq_len']
+        non_ts_cols = config['evaluation']['non_ts_cols']
+
+        df_real = extract_ts_from_csv(args.real_data_path, seq_len, non_ts_cols)
+        df_syn = extract_ts_from_csv(args.synthetic_data_path, seq_len, non_ts_cols)
+
+        data = load_from_df(df_real, seq_len)
+        generated_data = load_from_df(df_syn, seq_len)
 
 
         results = evaluate_data(config['evaluation'], data, generated_data)
