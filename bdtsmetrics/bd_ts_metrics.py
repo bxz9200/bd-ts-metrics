@@ -47,13 +47,16 @@ class tsMetrics:
 
         if "evaluation" in metric_config:
             config = metric_config
+            seq_len = config['evaluation']['seq_len']
+            non_ts_cols = config['evaluation']['non_ts_cols']
         else:
             config = {}
             for d in (model_config['data'], model_config['train'], model_config['model'],
                       model_config['generate']): config.update(d)
+            seq_len = config['seq_len']
+            non_ts_cols = config['evaluation']['non_ts_cols']
 
-        seq_len = config['evaluation']['seq_len']
-        non_ts_cols = config['evaluation']['non_ts_cols']
+
 
         df_real = extract_ts_from_csv(self.real_data, seq_len, non_ts_cols)
         df_syn = extract_ts_from_csv(self.syn_data, seq_len, non_ts_cols)
