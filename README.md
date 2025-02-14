@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 ## Usage
 ### Pip installation:
-Data must be in ".csv" and **must comply** the format defined [here](https://www.notion.so/betterdataai/TS-V1-10de183a10414c668cd46db59ce95495?pvs=4#7f02e54cde0b41f2b70adb52b511d1fe).
+Data must be in ".csv" and **must comply** the format defined in [Input format](https://www.notion.so/betterdataai/TS-V1-10de183a10414c668cd46db59ce95495?pvs=4#7f02e54cde0b41f2b70adb52b511d1fe).
 
 After installation, follow the code below for evaluation:
 ```python
