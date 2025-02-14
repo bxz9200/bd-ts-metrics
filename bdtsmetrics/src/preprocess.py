@@ -249,7 +249,7 @@ def extract_ts_from_csv(path, seq_len, non_ts_cols):
             extracted_ts_col_names.append(ts_col_names[i])
 
     # extract ts data and convert to the shape required by next step
-    ts = df[[c for c in df.columns if c not in other_static_columns and c != static_id and c != sortby]]
+    ts = df[[c for c in df.columns if c not in non_ts_cols]]
     ts = ts.to_numpy()
     # print(extracted_ts_col_names)
     print("temporal data shape: {}, seq_len is: {}".format(ts.shape, seq_len))
