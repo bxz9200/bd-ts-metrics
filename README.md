@@ -27,7 +27,7 @@ my_metrics.evaluate()
 ```
 **Report.html** will be generated in your local folder and detailed results will be stored in folder **./result**. 
 
-Refer to **config/config.yaml** for information of the config file. To run the evaluation correctly, make sure you correctly define the **seq_len** and **non_ts_cols** in the config file.
+Refer to **config/config.yaml** for information of the config file. To run the evaluation correctly, make sure you correctly define the **'seq_len'** and **'non_ts_cols'** in the config file.
 
 ### Clone this repo:
 Or install by cloning this repo:
