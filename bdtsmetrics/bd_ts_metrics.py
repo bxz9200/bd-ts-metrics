@@ -7,7 +7,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 import base64
 from git import Repo
-from src.preprocess import extract_ts_from_csv, load_from_df
+from .src.preprocess import extract_ts_from_csv, load_from_df
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
 
