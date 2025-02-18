@@ -51,8 +51,8 @@ class tsMetrics:
             non_ts_cols = config['evaluation']['non_ts_cols']
         else:
             config = {}
-            for d in (model_config['data'], model_config['train'], model_config['model'],
-                      model_config['generate']): config.update(d)
+            for d in (metric_config['data'], metric_config['train'], metric_config['model'],
+                      metric_config['generate']): config.update(d)
             seq_len = config['seq_len']
             non_ts_cols = config['evaluation']['non_ts_cols']
 
