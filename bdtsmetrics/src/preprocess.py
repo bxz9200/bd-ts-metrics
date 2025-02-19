@@ -241,6 +241,7 @@ def extract_ts_from_csv(path, seq_len, non_ts_cols):
     df = pd.read_csv(path)
     num_non_ts_cols = len(non_ts_cols)
     # extract ts data and convert to the shape required by next step
+    print("number of non ts columns:", num_non_ts_cols)
     ts = df[df.columns[num_non_ts_cols:]]
     ts = ts.to_numpy()
     # print(extracted_ts_col_names)
