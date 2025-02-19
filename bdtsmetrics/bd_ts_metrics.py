@@ -7,9 +7,10 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 import base64
 from git import Repo
-from .src.preprocess import extract_ts_from_csv, load_from_df
+from .src.preprocess import extract_ts_from_df, load_from_df
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
+from .src.row_matching import match_dataframes_by_similarity
 
 class tsMetrics:
     """Implements time series metrics in python
@@ -49,17 +50,26 @@ class tsMetrics:
             config = metric_config
             seq_len = config['evaluation']['seq_len']
             num_non_ts_cols = config['evaluation']['num_non_ts_cols']
+            n_rows = config['num_rows']
         else:
             config = {}
             for d in (metric_config['data'], metric_config['train'], metric_config['model'],
                       metric_config['generate']): config.update(d)
             seq_len = config['seq_len']
             num_non_ts_cols = config['evaluation']['num_non_ts_cols']
+            n_rows = config['num_rows']
 
+        df_real = pd.read_csv(self.real_data)
+        df_syn = pd.read_csv(self.syn_data)
+        # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
+        df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real, df_syn, df_real.columns[:num_non_ts_cols])
 
+        if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
+            print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
+            raise Exception("number of rows does not match")
 
-        df_real = extract_ts_from_csv(self.real_data, seq_len, num_non_ts_cols)
-        df_syn = extract_ts_from_csv(self.syn_data, seq_len, num_non_ts_cols)
+        df_real = extract_ts_from_df(df_real_matched, seq_len, num_non_ts_cols)
+        df_syn = extract_ts_from_df(df_syn_matched, seq_len, num_non_ts_cols)
 
         data = load_from_df(df_real, seq_len)
         generated_data = load_from_df(df_syn, seq_len)

@@ -255,7 +255,24 @@ def extract_ts_from_csv(path, seq_len, num_non_ts_cols):
     ts_df = pd.DataFrame(ts)
 
     return ts_df
-    
+
+def extract_ts_from_df(df, seq_len, num_non_ts_cols):
+    # extract ts data and convert to the shape required by next step
+    print("number of non ts columns:", num_non_ts_cols)
+    ts = df[df.columns[num_non_ts_cols:]]
+    ts = ts.to_numpy()
+    # print(extracted_ts_col_names)
+    print("temporal data shape: {}, seq_len is: {}".format(ts.shape, seq_len))
+    if ts.shape[1] % seq_len != 0:
+        raise Exception("length of time series data must be divisble by seq_len")
+    ts = np.reshape(ts, (ts.shape[0], seq_len, ts.shape[1] // seq_len))
+    dim = ts.shape[0] * ts.shape[1]
+    dim2 = ts.shape[2]
+    ts = np.reshape(ts, (dim, dim2))
+    # convert ts data back to df
+    ts_df = pd.DataFrame(ts)
+
+    return ts_df
 
             
     
