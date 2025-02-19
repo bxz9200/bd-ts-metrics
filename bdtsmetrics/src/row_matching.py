@@ -34,7 +34,7 @@ def match_dataframes_by_similarity(df1, df2,
         raise ValueError("df2 does not contain all required feature columns.")
 
     # Decide which DataFrame is smaller.
-    if len(df1) <= len(df2):
+    if len(df1) < len(df2):
         small_df, large_df = df1.copy(), df2.copy()
     else:
         small_df, large_df = df2.copy(), df1.copy()
