@@ -239,17 +239,9 @@ def load_from_df(df, seq_len):
 
 def extract_ts_from_csv(path, seq_len, non_ts_cols):
     df = pd.read_csv(path)
-
-    # get ts column names
-    ts_col_names = [c for c in df.columns if
-                    "Unnamed" not in c and c not in non_ts_cols]
-    extracted_ts_col_names = []
-    for i in range(len(ts_col_names)):
-        if i % seq_len == 0:
-            extracted_ts_col_names.append(ts_col_names[i])
-
+    num_non_ts_cols = len(non_ts_cols)
     # extract ts data and convert to the shape required by next step
-    ts = df[[c for c in df.columns if c not in non_ts_cols]]
+    ts = df[df.columns[num_non_ts_cols:]]
     ts = ts.to_numpy()
     # print(extracted_ts_col_names)
     print("temporal data shape: {}, seq_len is: {}".format(ts.shape, seq_len))
