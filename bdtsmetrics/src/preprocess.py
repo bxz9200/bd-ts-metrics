@@ -253,7 +253,7 @@ def extract_ts_from_csv(path, seq_len, non_ts_cols):
     dim2 = ts.shape[2]
     ts = np.reshape(ts, (dim, dim2))
     # convert ts data back to df
-    ts_df = pd.DataFrame(ts, columns=extracted_ts_col_names)
+    ts_df = pd.DataFrame(ts)
 
     return ts_df
     
