@@ -48,18 +48,18 @@ class tsMetrics:
         if "evaluation" in metric_config:
             config = metric_config
             seq_len = config['evaluation']['seq_len']
-            non_ts_cols = config['evaluation']['non_ts_cols']
+            num_non_ts_cols = config['evaluation']['num_non_ts_cols']
         else:
             config = {}
             for d in (metric_config['data'], metric_config['train'], metric_config['model'],
                       metric_config['generate']): config.update(d)
             seq_len = config['seq_len']
-            non_ts_cols = config['evaluation']['non_ts_cols']
+            num_non_ts_cols = config['evaluation']['num_non_ts_cols']
 
 
 
-        df_real = extract_ts_from_csv(self.real_data, seq_len, non_ts_cols)
-        df_syn = extract_ts_from_csv(self.syn_data, seq_len, non_ts_cols)
+        df_real = extract_ts_from_csv(self.real_data, seq_len, num_non_ts_cols)
+        df_syn = extract_ts_from_csv(self.syn_data, seq_len, num_non_ts_cols)
 
         data = load_from_df(df_real, seq_len)
         generated_data = load_from_df(df_syn, seq_len)
