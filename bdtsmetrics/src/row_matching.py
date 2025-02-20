@@ -12,6 +12,9 @@ def match_dataframes_by_similarity(df1, df2,
     one-to-one matching is performed: once a row in the larger DataFrame
     is matched, it is removed from further consideration.
 
+    This version handles a mix of numerical and categorical features by
+    leaving numeric columns as-is and one-hot encoding categorical columns.
+
     Parameters:
       df1, df2          : Input DataFrames with at least 8 columns.
       feature_columns   : List (or Index) of column names to use. If None,
@@ -25,9 +28,9 @@ def match_dataframes_by_similarity(df1, df2,
       matched_df1, matched_df2 : Two DataFrames (with reset index) where
                                  the i-th row in each DataFrame is a matched pair.
     """
-    # Use the first 4 columns if feature_columns is not provided.
+    # Use the first column if feature_columns is not provided.
     if feature_columns is None:
-        feature_columns = df1.columns[:4]
+        feature_columns = df1.columns[:1]
 
     # Check that df2 has these columns.
     if not all(col in df2.columns for col in feature_columns):
@@ -39,9 +42,45 @@ def match_dataframes_by_similarity(df1, df2,
     else:
         small_df, large_df = df2.copy(), df1.copy()
 
-    # Extract the feature columns as NumPy arrays.
-    arr_small = small_df[feature_columns].to_numpy()
-    arr_large = large_df[feature_columns].to_numpy()
+    # Extract the feature subsets.
+    features_small = small_df[feature_columns]
+    features_large = large_df[feature_columns]
+
+    # Identify numeric and categorical columns.
+    numeric_cols = []
+    categorical_cols = []
+    for col in feature_columns:
+        if pd.api.types.is_numeric_dtype(features_small[col]):
+            numeric_cols.append(col)
+        else:
+            categorical_cols.append(col)
+
+    # Numeric features: use them as-is.
+    if numeric_cols:
+        numeric_small = features_small[numeric_cols].copy()
+        numeric_large = features_large[numeric_cols].copy()
+    else:
+        numeric_small = pd.DataFrame(index=features_small.index)
+        numeric_large = pd.DataFrame(index=features_large.index)
+
+    # Categorical features: apply one-hot encoding.
+    if categorical_cols:
+        cat_small = pd.get_dummies(features_small[categorical_cols])
+        cat_large = pd.get_dummies(features_large[categorical_cols])
+        # Align the one-hot encoded DataFrames so they share the same columns.
+        cat_small, cat_large = cat_small.align(cat_large, join='outer', axis=1, fill_value=0)
+    else:
+        cat_small = pd.DataFrame(index=features_small.index)
+        cat_large = pd.DataFrame(index=features_large.index)
+
+    # Combine numeric and categorical features.
+    combined_small = pd.concat([numeric_small, cat_small], axis=1)
+    combined_large = pd.concat([numeric_large, cat_large], axis=1)
+
+    # Convert the combined features to NumPy arrays.
+    arr_small = combined_small.to_numpy()
+    arr_large = combined_large.to_numpy()
+
 
     n_large = arr_large.shape[0]
     # Create a boolean mask for available rows in the large DataFrame.
