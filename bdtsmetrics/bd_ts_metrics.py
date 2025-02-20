@@ -67,8 +67,10 @@ class tsMetrics:
         if self.mode == 'fast':
             if df_real.shape[0] >= df_syn.shape[0]:
                 df_real_matched = df_real[:df_syn.shape[0]]
+                df_syn_matched = df_syn.copy()
             else:
                 df_syn_matched = df_syn[:df_real.shape[0]]
+                df_real_matched = df_real.copy()
         else:
             # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
             df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real, df_syn, df_real.columns[:num_non_ts_cols])
