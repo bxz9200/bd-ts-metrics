@@ -27,8 +27,11 @@ config = "PATH/config.yaml" # both yaml and json files are supported
 real_data = "PATH/real_data.csv"
 syn_data = "PATH/synthetic_data.csv"
 
+# If you want to comprehensively evaluate your data with condition matching, set the mode to "comprehensive". The default mode is "fast".
+mode = 'comprehensive'
+
 # Run evaluation
-my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data)
+my_metrics = bd_ts_metrics.tsMetrics(config=config, real_data=real_data, syn_data=syn_data, mode=mode)
 my_metrics.evaluate()
 ```
 **Report.html** will be generated in your local folder and detailed results will be stored in folder **./result**. 
