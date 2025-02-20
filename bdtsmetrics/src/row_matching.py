@@ -77,6 +77,10 @@ def match_dataframes_by_similarity(df1, df2,
     combined_small = pd.concat([numeric_small, cat_small], axis=1)
     combined_large = pd.concat([numeric_large, cat_large], axis=1)
 
+    # Ensure the combined features are entirely numeric (cast to float).
+    combined_small = combined_small.astype(float)
+    combined_large = combined_large.astype(float)
+
     # Convert the combined features to NumPy arrays.
     arr_small = combined_small.to_numpy()
     arr_large = combined_large.to_numpy()
