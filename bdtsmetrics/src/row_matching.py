@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 
 
-def match_dataframes_by_similarity(df1, df2,
+def match_dataframes_by_similarity(df_real, df_syn,
                                    feature_columns=None,
                                    metric='euclidean'):
     """
     Matches rows from two DataFrames based on similarity computed from
-    specified feature columns (default: first 4 columns). The number of
+    specified feature columns (default: the first column). The number of
     matched rows equals the smaller DataFrame's number of rows. A greedy
     one-to-one matching is performed: once a row in the larger DataFrame
     is matched, it is removed from further consideration.
@@ -16,7 +16,7 @@ def match_dataframes_by_similarity(df1, df2,
     leaving numeric columns as-is and one-hot encoding categorical columns.
 
     Parameters:
-      df1, df2          : Input DataFrames with at least 8 columns.
+      df_real, df_syn          : Input DataFrames
       feature_columns   : List (or Index) of column names to use. If None,
                           the first column from df1 are used.
       metric            : 'euclidean' or 'cosine'. For 'euclidean',
@@ -28,19 +28,19 @@ def match_dataframes_by_similarity(df1, df2,
       matched_df1, matched_df2 : Two DataFrames (with reset index) where
                                  the i-th row in each DataFrame is a matched pair.
     """
+    # Assign real data column names to synthetic data
+    df_syn.columns = df_real.columns
+
     # Use the first column if feature_columns is not provided.
     if feature_columns is None:
-        feature_columns = df1.columns[:1]
+        feature_columns = df_real.columns[:1]
 
-    # Check that df2 has these columns.
-    if not all(col in df2.columns for col in feature_columns):
-        raise ValueError("df2 does not contain all required feature columns.")
 
     # Decide which DataFrame is smaller.
-    if len(df1) < len(df2):
-        small_df, large_df = df1.copy(), df2.copy()
+    if len(df_real) < len(df_syn):
+        small_df, large_df = df_real.copy(), df_syn.copy()
     else:
-        small_df, large_df = df2.copy(), df1.copy()
+        small_df, large_df = df_syn.copy(), df_real.copy()
 
     # Extract the feature subsets.
     features_small = small_df[feature_columns]
@@ -139,8 +139,8 @@ def match_dataframes_by_similarity(df1, df2,
 
 # ===========================
 # Example usage:
-# Assume you have two DataFrames, df1 and df2, each with at least 8 columns.
-# They share the same column names, and you want to match rows based on the first 4 columns.
+# Assume you have two DataFrames, df1 and df2
+# They share the same column names, and you want to match rows based on the first n columns.
 
 # df1 = pd.read_csv('data1.csv')
 # df2 = pd.read_csv('data2.csv')

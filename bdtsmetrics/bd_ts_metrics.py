@@ -47,6 +47,8 @@ class tsMetrics:
                 f.close()
         elif self.config.endswith('yaml'):
             metric_config = self.load_config_from_file(self.config)
+        else:
+            raise NotImplementedError
 
         if "evaluation" in metric_config:
             config = metric_config
@@ -73,7 +75,7 @@ class tsMetrics:
                 df_real_matched = df_real.copy()
         else:
             # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
-            df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real, df_syn, df_real.columns[:num_non_ts_cols])
+            df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real=df_real, df_syn=df_syn, feature_columns=df_real.columns[:num_non_ts_cols])
 
         if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
             print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
