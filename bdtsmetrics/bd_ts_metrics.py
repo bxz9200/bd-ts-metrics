@@ -28,7 +28,7 @@ class tsMetrics:
       :type seq_len: int
     """
 
-    def __init__(self, config, real_data, syn_data, mode):
+    def __init__(self, config, real_data, syn_data, mode='fast'):
         self.config = config
         self.real_data = real_data
         self.syn_data = syn_data
