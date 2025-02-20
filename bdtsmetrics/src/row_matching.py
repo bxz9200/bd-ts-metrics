@@ -18,7 +18,7 @@ def match_dataframes_by_similarity(df1, df2,
     Parameters:
       df1, df2          : Input DataFrames with at least 8 columns.
       feature_columns   : List (or Index) of column names to use. If None,
-                          the first 4 columns from df1 are used.
+                          the first column from df1 are used.
       metric            : 'euclidean' or 'cosine'. For 'euclidean',
                           the row with the smallest L2 distance is chosen.
                           For 'cosine', the row with the highest cosine
