@@ -28,10 +28,11 @@ class tsMetrics:
       :type seq_len: int
     """
 
-    def __init__(self, config, real_data, syn_data):
-      self.config = config
-      self.real_data = real_data
-      self.syn_data = syn_data
+    def __init__(self, config, real_data, syn_data, mode):
+        self.config = config
+        self.real_data = real_data
+        self.syn_data = syn_data
+        self.mode = mode
 
 
     def load_config_from_file(self,config_file):
@@ -62,8 +63,15 @@ class tsMetrics:
 
         df_real = pd.read_csv(self.real_data)
         df_syn = pd.read_csv(self.syn_data)
-        # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
-        df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real, df_syn, df_real.columns[:num_non_ts_cols])
+
+        if self.mode == 'fast':
+            if df_real.shape[0] >= df_syn.shape[0]:
+                df_real_matched = df_real[:df_syn.shape[0]]
+            else:
+                df_syn_matched = df_syn[:df_real.shape[0]]
+        else:
+            # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
+            df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real, df_syn, df_real.columns[:num_non_ts_cols])
 
         if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
             print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
