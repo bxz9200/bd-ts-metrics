@@ -29,6 +29,7 @@ def match_dataframes_by_similarity(df_real, df_syn,
                                  the i-th row in each DataFrame is a matched pair.
     """
     # Assign real data column names to synthetic data
+    df_syn[df_syn.columns[:len(feature_columns)]] = df_syn[df_syn.columns[:len(feature_columns)]][df_real.columns[:len(feature_columns)]]
     df_syn.columns = df_real.columns
 
     # Use the first column if feature_columns is not provided.
