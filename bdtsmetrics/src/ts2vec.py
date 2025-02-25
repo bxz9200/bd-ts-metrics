@@ -83,6 +83,7 @@ class TS2Vec:
             loss_log: a list containing the training losses on each epoch.
         '''
         assert train_data.ndim == 3
+        print("check point 2: train_data shape:", train_data.shape)
         
         if n_iters is None and n_epochs is None:
             n_iters = 200 if train_data.size <= 100000 else 600  # default param for n_iters
@@ -91,12 +92,15 @@ class TS2Vec:
             sections = train_data.shape[1] // self.max_train_length
             if sections >= 2:
                 train_data = np.concatenate(split_with_nan(train_data, sections, axis=1), axis=0)
+        print("check point 3: train_data shape:", train_data.shape)
 
         temporal_missing = np.isnan(train_data).all(axis=-1).any(axis=0)
         if temporal_missing[0] or temporal_missing[-1]:
             train_data = centerize_vary_length_series(train_data)
+        print("check point 4: train_data shape:", train_data.shape)
                 
         train_data = train_data[~np.isnan(train_data).all(axis=2).all(axis=1)]
+        print("check point 5: train_data shape:", train_data.shape)
         
         train_dataset = TensorDataset(torch.from_numpy(train_data).to(torch.float))
         train_loader = DataLoader(train_dataset, batch_size=min(self.batch_size, len(train_dataset)), shuffle=True, drop_last=True)
