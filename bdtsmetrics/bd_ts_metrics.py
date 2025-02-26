@@ -91,11 +91,11 @@ class tsMetrics:
         # print("real_data:", df_real.head())
         # print("syn_data:", df_syn.head())
 
-        # data = load_from_df(df_real, seq_len)
-        # generated_data = load_from_df(df_syn, seq_len)
+        data = load_from_df(df_real, seq_len)
+        generated_data = load_from_df(df_syn, seq_len)
 
-        data = load_from_df_no_norm(df_real, seq_len)
-        generated_data = load_from_df_no_norm(df_syn, seq_len)
+        # data = load_from_df_no_norm(df_real, seq_len)
+        # generated_data = load_from_df_no_norm(df_syn, seq_len)
 
         # print("check data")
         # print("real_data:", data)
