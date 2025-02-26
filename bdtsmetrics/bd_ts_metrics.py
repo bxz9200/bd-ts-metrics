@@ -67,8 +67,8 @@ class tsMetrics:
         df_real = pd.read_csv(self.real_data)
         df_syn = pd.read_csv(self.syn_data)
 
-        print("df_real:", df_real.head())
-        print("df_syn:", df_syn.head())
+        # print("df_real:", df_real.head())
+        # print("df_syn:", df_syn.head())
 
         if self.mode == 'fast':
             if df_real.shape[0] >= df_syn.shape[0]:
@@ -88,8 +88,15 @@ class tsMetrics:
         df_real = extract_ts_from_df(df_real_matched, seq_len, num_non_ts_cols)
         df_syn = extract_ts_from_df(df_syn_matched, seq_len, num_non_ts_cols)
 
+        print("real_data:", df_real.head())
+        print("syn_data:", df_syn.head())
+
         data = load_from_df(df_real, seq_len)
         generated_data = load_from_df(df_syn, seq_len)
+
+        print("check data")
+        print("real_data:", data)
+        print("syn_data:", generated_data)
 
         if np.isnan(data).any():
             print("There are nan values in the real data, Betterdata has filled them with 0")
