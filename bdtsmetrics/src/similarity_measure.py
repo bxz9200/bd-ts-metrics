@@ -66,7 +66,9 @@ def calculate_total_similarity(df1, df2):
     # Sum up the similarities across all rows
     total_cosine_similarity = cosine_sims.sum()
     total_distance_similarity = dist_sims.sum()
-    return total_cosine_similarity, total_distance_similarity
+    average_cosine_similarity = total_cosine_similarity / len(cosine_sims)
+    average_distance_similarity = total_distance_similarity / len(dist_sims)
+    return average_cosine_similarity, average_distance_similarity
 
 # Example usage (assuming df1 and df2 are defined DataFrames with identical schema):
 # total_cos, total_dist = calculate_total_similarity(df1, df2)
