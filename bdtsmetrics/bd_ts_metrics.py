@@ -118,9 +118,19 @@ class tsMetrics:
 
         with open('./result/result.json', 'w') as f:
             json.dump(results, f)
+        
+        with open('./result/result.json', 'r') as file:
+            config = json.load(file)
 
-        with open('./result/result.json', 'w') as f:
-            json.dump({'cos_similarity': cos_similarity, 'dist_similarity': dist_similarity}, f)
+        # New data to add (a new key-value pair)
+        new_data = {"cos_similarity": cos_similarity, "dist_similarity": dist_similarity}
+
+        # Update the dictionary with new data
+        config.update(new_data)
+
+        # Write the updated data back to the JSON file
+        with open('./result/result.json', 'w') as file:
+            json.dump(config, file)
 
         print('Program normal end.')
 
