@@ -71,6 +71,8 @@ class tsMetrics:
         # print("df_real:", df_real.head())
         # print("df_syn:", df_syn.head())
 
+        static_columns = df_real.columns[:num_non_ts_cols]
+
         if self.mode == 'fast':
             if df_real.shape[0] >= df_syn.shape[0]:
                 df_real_matched = df_real[:df_syn.shape[0]]
@@ -80,9 +82,11 @@ class tsMetrics:
                 df_real_matched = df_real.copy()
         else:
             # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
-            df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real=df_real, df_syn=df_syn, feature_columns=df_real.columns[:num_non_ts_cols])
+            df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real=df_real, df_syn=df_syn, feature_columns=static_columns)
 
-        cos_similarity, dist_similarity = calculate_total_similarity(df_real_matched.columns[num_non_ts_cols:], df_syn_matched.columns[num_non_ts_cols:])
+        # Calculate the total similarity between the real and synthetic data
+        cos_similarity, dist_similarity = calculate_total_similarity(df_real_matched[static_columns], df_syn_matched[static_columns])
+        
         if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
             print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
             raise Exception("number of rows does not match")
