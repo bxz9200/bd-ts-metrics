@@ -80,7 +80,7 @@ def evaluate_data(cfg, ori_data, gen_data):
         return None
     else:
         train_data = ori_data
-        print("ori_data:", ori_data)
+        # print("ori_data:", ori_data)
         print("check point 1: train_data shape:", train_data.shape)
 
 
