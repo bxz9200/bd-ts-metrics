@@ -21,8 +21,8 @@ def visualize_tsne(ori_data, gen_data, result_path, save_file_name):
     prep_data = np.mean(ori_data, axis=1)
     prep_data_hat = np.mean(gen_data, axis=1)
 
-    print("tsne prep_data:", prep_data)
-    print("tsne prep_data_hat:", prep_data_hat)
+    # print("tsne prep_data:", prep_data)
+    # print("tsne prep_data_hat:", prep_data_hat)
 
     colors = ["C0" for i in range(sample_num)] + ["C1" for i in range(sample_num)]    
     
@@ -63,8 +63,8 @@ def visualize_distribution(ori_data, gen_data, result_path, save_file_name):
     prep_data = np.mean(ori_data, axis=1)
     prep_data_hat = np.mean(gen_data, axis=1)
 
-    print("distribution prep_data:", prep_data)
-    print("distribution prep_data_hat:", prep_data_hat)
+    # print("distribution prep_data:", prep_data)
+    # print("distribution prep_data_hat:", prep_data_hat)
 
     fig, ax = plt.subplots(1,1,figsize = (2,2))
     sns.kdeplot(prep_data.flatten(), color='C0', linewidth=2, label='Original', ax=ax)
@@ -84,11 +84,11 @@ def visualize_distribution_bd(ori_data, gen_data, result_path, save_file_name):
     sample_num = min([1000, len(ori_data)])
     idx = np.random.permutation(len(ori_data))[:sample_num]
 
-    ori_data = ori_data.flatten()
-    gen_data = gen_data.flatten()
+    ori_data = ori_data[idx]
+    gen_data = gen_data[idx]
 
-    prep_data = np.mean(ori_data, axis=1)
-    prep_data_hat = np.mean(gen_data, axis=1)
+    prep_data = ori_data.flatten()
+    prep_data_hat = gen_data.flatten()
 
     print("distribution prep_data:", prep_data)
     print("distribution prep_data_hat:", prep_data_hat)
