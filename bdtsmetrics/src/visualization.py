@@ -21,6 +21,9 @@ def visualize_tsne(ori_data, gen_data, result_path, save_file_name):
     prep_data = np.mean(ori_data, axis=1)
     prep_data_hat = np.mean(gen_data, axis=1)
 
+    print("tsne prep_data:", prep_data)
+    print("tsne prep_data_hat:", prep_data_hat)
+
     colors = ["C0" for i in range(sample_num)] + ["C1" for i in range(sample_num)]    
     
     prep_data_final = np.concatenate((prep_data, prep_data_hat), axis = 0)
