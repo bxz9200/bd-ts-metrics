@@ -8,6 +8,10 @@ from .utils import MinMaxScaler, make_sure_path_exist
 # adapt from https://github.com/jsyoon0823/TimeGAN, https://openreview.net/forum?id=ez6VHWvuXEx
 
 def visualize_tsne(ori_data, gen_data, result_path, save_file_name):
+    if np.isnan(ori_data).any():
+        print("There are nan values in the real data, Betterdata has filled them with 0")
+        np.nan_to_num(ori_data, nan=0.0)
+            
     sample_num = min([1000, len(ori_data)])
     idx = np.random.permutation(len(ori_data))[:sample_num]
 
