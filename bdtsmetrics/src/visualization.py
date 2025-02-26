@@ -63,6 +63,9 @@ def visualize_distribution(ori_data, gen_data, result_path, save_file_name):
     prep_data = np.mean(ori_data, axis=1)
     prep_data_hat = np.mean(gen_data, axis=1)
 
+    print("distribution prep_data:", prep_data)
+    print("distribution prep_data_hat:", prep_data_hat)
+
     fig, ax = plt.subplots(1,1,figsize = (2,2))
     sns.kdeplot(prep_data.flatten(), color='C0', linewidth=2, label='Original', ax=ax)
 
