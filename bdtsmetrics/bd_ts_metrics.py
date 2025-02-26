@@ -67,6 +67,9 @@ class tsMetrics:
         df_real = pd.read_csv(self.real_data)
         df_syn = pd.read_csv(self.syn_data)
 
+        print("df_real:", df_real.head())
+        print("df_syn:", df_syn.head())
+
         if self.mode == 'fast':
             if df_real.shape[0] >= df_syn.shape[0]:
                 df_real_matched = df_real[:df_syn.shape[0]]
