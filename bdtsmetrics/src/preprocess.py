@@ -238,6 +238,16 @@ def load_from_df(df, seq_len):
     norm_data = normalize(data)
     return norm_data
 
+def load_from_df_no_norm(df, seq_len):
+    data = df.to_numpy()
+    data = np.nan_to_num(data, nan=0.0)
+    if len(data.shape) != 2:
+        data = data.reshape((df_real.shape[0], 1))
+
+    data = bd_sliding_window_view(data, seq_len)
+    # norm_data = normalize(data)
+    return data
+
 def load_from_df_v2(df, seq_len):
     data = df.to_numpy()
     data = np.nan_to_num(data, nan=0.0)
