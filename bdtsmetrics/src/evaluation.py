@@ -7,7 +7,7 @@ from dtaidistance.dtw_ndim import distance as multi_dtw_distance
 from .ds_ps import discriminative_score_metrics, predictive_score_metrics
 from .ts2vec import initialize_ts2vec
 from .feature_based_measures import calculate_mdd, calculate_acd, calculate_sd, calculate_kd
-from .visualization import visualize_tsne, visualize_distribution
+from .visualization import visualize_tsne, visualize_distribution, visualize_distribution_bd
 from .utils import show_with_start_divider, show_with_end_divider, determine_device, write_json_data
 
 
@@ -144,6 +144,8 @@ def evaluate_data(cfg, ori_data, gen_data):
     if 'Distribution' in method_list:
         visualize_distribution(ori_data, gen_data, result_path, combined_name)
     #print(f'Evaluation results:{result}.')
+    if 'Distribution_BD' in method_list:
+        visualize_distribution_bd(ori_data, gen_data, result_path, combined_name)
 
     if isinstance(result, dict):
         result_path = os.path.join(result_path, f'{combined_name}.json')
