@@ -90,7 +90,7 @@ class tsMetrics:
 
         if np.isnan(data).any():
             print("There are nan values in the real data, Betterdata has filled them with 0")
-            np.nan_to_num(data, nan=0.0)
+            data = np.nan_to_num(data, nan=0.0)
 
         results = evaluate_data(config['evaluation'], data, generated_data)
 
