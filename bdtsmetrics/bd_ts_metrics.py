@@ -123,7 +123,7 @@ class tsMetrics:
             config = json.load(file)
 
         # New data to add (a new key-value pair)
-        new_data = {"cos_similarity": cos_similarity, "dist_similarity": dist_similarity}
+        new_data = {"cos_dissimilarity": 1 - cos_similarity, "dist_dissimilarity": 1 - dist_similarity}
 
         # Update the dictionary with new data
         config.update(new_data)
