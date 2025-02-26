@@ -13,6 +13,7 @@ from .src.preprocess import extract_ts_from_df, load_from_df, load_from_df_no_no
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
 from .src.row_matching import match_dataframes_by_similarity
+from .src.similarity_measure import calculate_total_similarity
 
 class tsMetrics:
     """Implements time series metrics in python
@@ -81,6 +82,7 @@ class tsMetrics:
             # In this code, we always assume that synthetic dataset size is smaller than the real dataset size
             df_syn_matched, df_real_matched = match_dataframes_by_similarity(df_real=df_real, df_syn=df_syn, feature_columns=df_real.columns[:num_non_ts_cols])
 
+        cos_similarity, dist_similarity = calculate_total_similarity(df_real_matched.columns[num_non_ts_cols:], df_syn_matched.columns[num_non_ts_cols:])
         if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
             print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
             raise Exception("number of rows does not match")
@@ -112,6 +114,9 @@ class tsMetrics:
 
         with open('./result/result.json', 'w') as f:
             json.dump(results, f)
+
+        with open('./result/result.json', 'w') as f:
+            json.dump({'cos_similarity': cos_similarity, 'dist_similarity': dist_similarity}, f)
 
         print('Program normal end.')
 
