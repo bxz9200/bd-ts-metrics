@@ -80,7 +80,7 @@ def evaluate_data(cfg, ori_data, gen_data):
         return None
     else:
         train_data = ori_data
-        train_data = np.nan_to_num(train_data, nan=0.0)
+        # train_data = np.nan_to_num(train_data, nan=0.0)
         print("check point 1: train_data shape:", train_data.shape)
 
 
