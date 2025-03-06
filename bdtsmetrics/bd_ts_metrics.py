@@ -9,7 +9,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 import base64
 from git import Repo
-from .src.preprocess import extract_ts_from_df, load_from_df, load_from_df_no_norm
+from .src.preprocess import extract_ts_from_df, load_from_df, load_from_df_no_norm, load_from_df_v2
 from .src.evaluation import evaluate_data
 from .src.utils import write_json_data
 from .src.row_matching import match_dataframes_by_similarity
@@ -97,11 +97,11 @@ class tsMetrics:
         # print("real_data:", df_real.head())
         # print("syn_data:", df_syn.head())
 
-        data = load_from_df(df_real, seq_len)
-        generated_data = load_from_df(df_syn, seq_len)
+        # data = load_from_df(df_real, seq_len)
+        # generated_data = load_from_df(df_syn, seq_len)
 
-        # data = load_from_df_no_norm(df_real, seq_len)
-        # generated_data = load_from_df_no_norm(df_syn, seq_len)
+        data = load_from_df_v2(df_real, seq_len)
+        generated_data = load_from_df_v2(df_syn, seq_len)
 
         # print("check data")
         # print("real_data:", data)
