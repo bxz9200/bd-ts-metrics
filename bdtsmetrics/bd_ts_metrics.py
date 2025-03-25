@@ -87,8 +87,8 @@ class tsMetrics:
         # Calculate the total similarity between the real and synthetic data
         cos_similarity, dist_similarity = calculate_total_similarity(df_real_matched[static_columns], df_syn_matched[static_columns])
         
-        if df_real_matched.shape[0] != n_rows or df_syn_matched.shape[0] != n_rows:
-            print("real_match rows: {}, syn_match rows: {}, number of rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0], n_rows))
+        if df_real_matched.shape[0] != df_syn_matched.shape[0]:
+            print("real_match rows: {}, syn_match rows: {}".format(df_real_matched.shape[0], df_syn_matched.shape[0]))
             raise Exception("number of rows does not match")
 
         df_real = extract_ts_from_df(df_real_matched, seq_len, num_non_ts_cols)
